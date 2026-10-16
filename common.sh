@@ -261,7 +261,7 @@ case $FFMPEG_VARIANT in
 
             # SayIt sidecar addition: raw PCM output for the pipe-based decode
             # pipeline (ffmpeg -f s16le).
-            --enable-muxer=s16le
+            --enable-muxer=pcm_s16le
 
             # Needed for sample-rate / sample-format conversion when transcoding.
             --enable-filter=aresample
