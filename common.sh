@@ -183,12 +183,6 @@ FFMPEG_CONFIGURE_FLAGS=(
     --enable-decoder=dsd_lsbf_planar
     --enable-decoder=dsd_msbf_planar
 
-    # SayIt sidecar additions: DTS and TrueHD/MLP audio inside movie
-    # containers; all three are LGPL-native FFmpeg decoders.
-    --enable-decoder=dca
-    --enable-decoder=truehd
-    --enable-decoder=mlp
-
     --enable-parser=aac
     --enable-parser=aac_latm
     --enable-parser=ac3
@@ -199,6 +193,16 @@ FFMPEG_CONFIGURE_FLAGS=(
     --enable-parser=mpegaudio
     --enable-parser=tak
     --enable-parser=vorbis
+
+    # SayIt sidecar additions for the file-transcription pipeline: DTS and
+    # TrueHD/MLP decoding for movie containers, raw PCM output (ffmpeg
+    # -f s16le) and the resampler for 16 kHz mono conversion.
+    --enable-decoder=dca
+    --enable-decoder=truehd
+    --enable-decoder=mlp
+    --enable-encoder=pcm_s16le
+    --enable-muxer=pcm_s16le
+    --enable-filter=aresample
 )
 
 # Label used in the output directory / artifact name for each variant.
@@ -258,10 +262,6 @@ case $FFMPEG_VARIANT in
             --enable-muxer=au
             --enable-muxer=caf
             --enable-muxer=matroska
-
-            # SayIt sidecar addition: raw PCM output for the pipe-based decode
-            # pipeline (ffmpeg -f s16le).
-            --enable-muxer=pcm_s16le
 
             # Needed for sample-rate / sample-format conversion when transcoding.
             --enable-filter=aresample
